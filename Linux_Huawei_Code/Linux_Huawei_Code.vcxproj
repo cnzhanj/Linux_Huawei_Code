@@ -75,9 +75,19 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClCompile Include="Cal.cpp" />
+    <ClCompile Include="Car.cpp" />
+    <ClCompile Include="Cross.cpp" />
+    <ClCompile Include="Initial.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Road.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cal.h" />
+    <ClInclude Include="Car.h" />
+    <ClInclude Include="Cross.h" />
+    <ClInclude Include="Initial.h" />
+    <ClInclude Include="Road.h" />
   </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
