@@ -327,7 +327,6 @@ void Cal::mainFunction()
 
 	for (int i = 0; i < mCar.size(); i++)
 	{
-	
 		priorityCar.push_back(mCar[i]);
 		time = (currentTime / sendPriCarEachTime) + 1;
 		currentTime++;
@@ -335,8 +334,10 @@ void Cal::mainFunction()
 		cout << time << endl;
 		starTimeMatrix.push_back(time);
 		count++;
-		if ((count == sendPriCarEachTime))
+		if ((count == sendPriCarEachTime)|| i == mCar.size()-1)
 		{
+			if (i == mCar.size() - 1)
+				cout << "finish" << endl;
 			cout << priorityCar.size() << endl;
 			//calTimeMatrix(priorityCar);
 			setVote(priorityCar);
@@ -350,6 +351,7 @@ void Cal::mainFunction()
 		
 		}
 	}
+
 	// for (int i = 0; i < mCar.size(); i++)
 	// {
 	//	if (mCar[i].getPriority())
