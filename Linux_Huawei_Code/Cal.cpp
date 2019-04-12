@@ -192,6 +192,13 @@ void Cal::setVote(vector<Car> car)
 		}
 	}
 	mVote = vote;
+	for (int i = 0; i < mVote.size(); i++)
+	{
+		for (int j = 0; j < mVote[i].size(); j++)
+		{
+			mTimeMatrix[i][j] += mVote[i][j];
+		}
+	}
 }
 void Cal::Floyd(vector<vector<double>> dis)
 {
@@ -316,84 +323,110 @@ void Cal::mainFunction()
 	vector<int> starTimeMatrix;
 	int time = 0;
 	int currentTime = 0;
-	int sendPriCarEachTime = 10;
+	int sendPriCarEachTime = 2000;
+
 	for (int i = 0; i < mCar.size(); i++)
 	{
-		if (mCar[i].getPriority())
+	
+		priorityCar.push_back(mCar[i]);
+		time = (currentTime / sendPriCarEachTime) + 1;
+		currentTime++;
+
+		cout << time << endl;
+		starTimeMatrix.push_back(time);
+		count++;
+		if ((count == sendPriCarEachTime))
 		{
-			priorityCar.push_back(mCar[i]);
-			time = (currentTime / sendPriCarEachTime) + 1;
-			currentTime++;
-			//cout << currentTime << endl;
-			//cout << time << endl;
-			starTimeMatrix.push_back(time);
-			count++;
-			if ((count == sendPriCarEachTime))
-			{
-				cout << priorityCar.size() << endl;
-				calTimeMatrix(priorityCar);
-				setVote(priorityCar);
-				Floyd(mTimeMatrix);
-				//setMinDisPathRecordForCar();
-				setCarStartTimeForCar(priorityCar, starTimeMatrix);
-				count = 0;
-				//cout << priorityCar[0].getActualTime() << endl;
-				priorityCar.clear();
-				starTimeMatrix.clear();
-			}
+			cout << priorityCar.size() << endl;
+			//calTimeMatrix(priorityCar);
+			setVote(priorityCar);
+			Floyd(mTimeMatrix);
+			//setMinDisPathRecordForCar();
+			setCarStartTimeForCar(priorityCar, starTimeMatrix);
+			count = 0;
+			//cout << priorityCar[0].getActualTime() << endl;
+			priorityCar.clear();
+			starTimeMatrix.clear();
+		
 		}
 	}
-	cout << priorityCar.size() << endl;
-	calTimeMatrix(priorityCar);
-	setVote(priorityCar);
-	Floyd(mTimeMatrix);
-	//setMinDisPathRecordForCar();
-	setCarStartTimeForCar(priorityCar, starTimeMatrix);
-	count = 0;
-	//cout << priorityCar[0].getActualTime() << endl;
-	priorityCar.clear();
-	starTimeMatrix.clear();
+	// for (int i = 0; i < mCar.size(); i++)
+	// {
+	//	if (mCar[i].getPriority())
+	//	{
+	//		priorityCar.push_back(mCar[i]);
+	//		time = (currentTime / sendPriCarEachTime) + 1;
+	//		currentTime++;
+
+	//		cout << time << endl;
+	//		starTimeMatrix.push_back(time);
+	//		count++;
+	//		if ((count == sendPriCarEachTime))
+	//		{
+	//			cout << priorityCar.size() << endl;
+	//			//calTimeMatrix(priorityCar);
+	//			setVote(priorityCar);
+	//			Floyd(mTimeMatrix);
+	//			//setMinDisPathRecordForCar();
+	//			setCarStartTimeForCar(priorityCar, starTimeMatrix);
+	//			count = 0;
+	//			//cout << priorityCar[0].getActualTime() << endl;
+	//			priorityCar.clear();
+	//			starTimeMatrix.clear();
+	//		}
+	//	}
+	//}
+	//cout << priorityCar.size() << endl;
+	////calTimeMatrix(priorityCar);
+	//setVote(priorityCar);
+	//Floyd(mTimeMatrix);
+	////setMinDisPathRecordForCar();
+	//setCarStartTimeForCar(priorityCar, starTimeMatrix);
+	//count = 0;
+	////cout << priorityCar[0].getActualTime() << endl;
+	//priorityCar.clear();
+	//starTimeMatrix.clear();
 
 
-	vector<Car> nomalCar;
-	int sendNomalCarEachTime = 30;
-	count = 0;
-	currentTime = 0;
-	int timePriEnd = time;
-	for (int i = 0; i < mCar.size(); i++)
-	{
-		if (!mCar[i].getPreSet() && !mCar[i].getPriority())
-		{
-			nomalCar.push_back(mCar[i]);
-			time = (currentTime / sendNomalCarEachTime) + timePriEnd;
-			currentTime++;
-			//cout << time << endl;
-			starTimeMatrix.push_back(time);
-			count++;
+	//vector<Car> nomalCar;
+	//int sendNomalCarEachTime = 30;
+	//count = 0;
+	//currentTime = 0;
+	//int timePriEnd = time;
+	//for (int i = 0; i < mCar.size(); i++)
+	//{
+	//	if (!mCar[i].getPreSet() && !mCar[i].getPriority())
+	//	{
+	//		nomalCar.push_back(mCar[i]);
+	//		time = (currentTime / sendNomalCarEachTime) + timePriEnd;
+	//		currentTime++;
 
-			if ((count == sendNomalCarEachTime))
-			{
-				cout << nomalCar.size() << endl;
-				calTimeMatrix(nomalCar);
-				setVote(nomalCar);
-				Floyd(mTimeMatrix);
-				//setMinDisPathRecordForCar();
-				setCarStartTimeForCar(nomalCar, starTimeMatrix);
-				//cout << nomalCar[0].getActualTime() << endl;
-				count = 0;
-				nomalCar.clear();
-				starTimeMatrix.clear();
-			}
-		}
-	}
-	cout << nomalCar.size() << endl;
-	calTimeMatrix(nomalCar);
-	setVote(nomalCar);
-	Floyd(mTimeMatrix);
-	setCarStartTimeForCar(nomalCar, starTimeMatrix);
-	count = 0;
-	nomalCar.clear();
-	starTimeMatrix.clear();
+	//		starTimeMatrix.push_back(time);
+	//		count++;
+
+	//		if ((count == sendNomalCarEachTime))
+	//		{
+	//			//cout << nomalCar.size() << endl;
+	//			//calTimeMatrix(nomalCar);
+	//			setVote(nomalCar);
+	//			Floyd(mTimeMatrix);
+	//			//setMinDisPathRecordForCar();
+	//			setCarStartTimeForCar(nomalCar, starTimeMatrix);
+	//			//cout << nomalCar[0].getActualTime() << endl;
+	//			count = 0;
+	//			nomalCar.clear();
+	//			starTimeMatrix.clear();
+	//		}
+	//	}
+	//}
+	//cout << nomalCar.size() << endl;
+	////calTimeMatrix(nomalCar);
+	//setVote(nomalCar);
+	//Floyd(mTimeMatrix);
+	//setCarStartTimeForCar(nomalCar, starTimeMatrix);
+	//count = 0;
+	//nomalCar.clear();
+	//starTimeMatrix.clear();
 
 	setMinDisPathRecordForCar();
 }

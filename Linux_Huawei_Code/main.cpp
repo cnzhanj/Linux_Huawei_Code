@@ -13,9 +13,7 @@ string answerPath = basePath + "answer.txt";
 int main()
 {
 	Cal cal;
-
 	cal.init(carPath, crossPath, roadPath, presetAnswerPath);
-
 	cal.mainFunction();
 	cal.writeAns(answerPath);
 
